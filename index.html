@@ -1,1 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MoveScan Survey</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #070b16;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
 
+    .fallback {
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+      display: none;
+    }
+
+    iframe {
+      border: none;
+      width: 100%;
+      height: 100vh;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div id="fallback" class="fallback">
+    <h2>MoveScan Survey</h2>
+    <p>This survey link is missing a company code.</p>
+  </div>
+
+  <iframe id="surveyFrame" allow="camera; microphone; fullscreen"></iframe>
+
+  <script>
+    const path = window.location.pathname.replace("/", "").trim();
+
+    const clientCode = path || "";
+
+    if (!clientCode) {
+      document.getElementById("surveyFrame").style.display = "none";
+      document.getElementById("fallback").style.display = "block";
+    } else {
+      const filloutUrl = `https://movescan.fillout.com/estimate?client_code=${encodeURIComponent(clientCode)}`;
+      document.getElementById("surveyFrame").src = filloutUrl;
+    }
+  </script>
+</body>
+</html>
